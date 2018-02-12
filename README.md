@@ -9,17 +9,22 @@ sudo apt-get install npm
 sudo npm install -g pm2
 ````
 
-
-### Configure pm2
-
+### Starting PM2 on Boot
+````shell
 pm2 startup
+````
+
+### Starting temperature script with PM2
+````shell
 pm2 start [Location of Repo]/RaspberryPi-Weather-Station/server/temperature.py
+````
+
+### Enable restarting of PM2 after rebooting
+````shell
 pm2 save
+````
 
 ### Controlling your temperature.py and other scripts via PM2
-
-With your Temperature script running via PM2, you have some handy tools at hand:
-
 
 #### Restarting temperature script
 ````shell
