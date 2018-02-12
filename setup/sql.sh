@@ -5,7 +5,7 @@ CREATE DATABASE sensors;
 USE sensors;
 CREATE TABLE tempData (temp_id INT AUTO_INCREMENT KEY, takeDate DATE, takeTime TIME, zone VARCHAR(64), temperature DOUBLE);
 CREATE USER 'sensors'@'localhost' IDENTIFIED by 'testPassword';                                                
-GRANT ALL PRIVILEGES ON sensors.* TO 'sensors'@'localhost';
+GRANT INSERT PRIVILEGES ON sensors.* TO 'sensors'@'localhost';
 FLUSH PRIVILEGES;
 
 EOF
