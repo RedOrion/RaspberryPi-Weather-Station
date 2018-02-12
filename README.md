@@ -1,7 +1,7 @@
 # RaspberryPi-Weather-Station
 
 
-## Configuring Server
+## Configuring the Server
 
 ### Install Required Packages
 ````shell
