@@ -6,7 +6,6 @@
 ### Install Required Packages
 ````shell
 sudo apt-get install npm
-sudo npm install -g pm2
 ````
 
 ### Starting PM2 on Boot
