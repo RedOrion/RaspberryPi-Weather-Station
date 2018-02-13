@@ -1,6 +1,5 @@
 # RaspberryPi-Weather-Station
 
-
 ## Configuring the Server to always run on boot
 
 ### Install Required Packages
@@ -15,7 +14,7 @@ pm2 startup
 
 ### Starting temperature script with PM2
 ````shell
-pm2 start [Location of Repo]/RaspberryPi-Weather-Station/server/temperature.py
+pm2 start /data/RaspberryPi-Weather-Station/server/temperature.py
 ````
 
 ### Enable restarting of PM2 after rebooting
@@ -49,5 +48,5 @@ pm2 show temperature
 #### Add to crontab
 You can change the check interval to whatever you want. Currently it is set to run 30 minutes past the hour
 ````shell
-30 *  *   *   * /home/pi/Developer/RaspberryPi-Weather-Station/server/Update.sh && pm2	restart	temperature
+30 *  *   *   * /data/RaspberryPi-Weather-Station/server/Update.sh && pm2 restart temperature
 ````
