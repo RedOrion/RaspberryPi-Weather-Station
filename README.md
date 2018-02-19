@@ -7,6 +7,16 @@ cd /data
 git clone git@github.com:RedOrion/RaspberryPi-Weather-Station.git
 ````
 
+## Initial Setup
+
+Install the mysql server and client and setup the users for mysql
+
+````shell
+cd /data//RaspberryPi-Weather-Station/setup/
+./packages.sh
+./sql.sh
+````
+
 ## Configuring the Server to always run on boot
 
 ### Install Required Packages
