@@ -22,6 +22,7 @@ cd /data//RaspberryPi-Weather-Station/setup/
 ### Install Required Packages
 ````shell
 sudo apt-get install npm
+npm install --global pm2
 ````
 
 ### Starting PM2 on Boot
