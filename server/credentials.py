@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-Location = "Test"
+Location = "Upper Garage Field"
 User = "sensors"
 Password = "testPassword"
 Database = "sensors"
