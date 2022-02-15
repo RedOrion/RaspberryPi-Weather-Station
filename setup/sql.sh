@@ -1,16 +1,16 @@
 #!/bin/bash
 
-while getopts s:w: flag
+while getopts s:h: flag
 do
     case "${flag}" in
         s) mysqlserver=${OPTARG};;
-        w) weatherstationpi=${OPTARG};;
+        h) weatherstationpi=${OPTARG};;
     esac
 done
 echo "MysqlServer: $mysqlserver";
 echo "Weather Station Pi: $weatherstationpi";
 
-sudo mysql -u root -p -h $mysqlserver << EOF
+mysql -u root -p -h $mysqlserver << EOF
 CREATE DATABASE IF NOT EXISTS sensors;
 USE sensors;
 CREATE TABLE IF NOT EXISTS tempData (temp_id INT AUTO_INCREMENT KEY, Date datetime default now(), zone VARCHAR(64), temperature DOUBLE);
