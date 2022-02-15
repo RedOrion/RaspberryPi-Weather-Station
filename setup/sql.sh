@@ -13,7 +13,7 @@ echo "Weather Station Pi: $weatherstationpi";
 sudo mysql -u root -p -h $mysqlserver << EOF
 CREATE DATABASE IF NOT EXISTS sensors;
 USE sensors;
-CREATE TABLE IF NOT EXISTS tempData (temp_id INT AUTO_INCREMENT KEY, takeDate DATE, takeTime TIME, zone VARCHAR(64), temperature DOUBLE);
+CREATE TABLE IF NOT EXISTS tempData (temp_id INT AUTO_INCREMENT KEY, datetime default now(), zone VARCHAR(64), temperature DOUBLE);
 CREATE USER IF NOT EXISTS 'sensors'@'$weatherstationpi' IDENTIFIED by 'sensorsTest';                                                
 GRANT INSERT ON sensors.* TO 'sensors'@'$weatherstationpi';
 CREATE USER IF NOT EXISTS 'website'@'$weatherstationpi' IDENTIFIED by 'websiteTest';

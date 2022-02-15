@@ -4,7 +4,6 @@ import os
 import glob
 import time
 import MySQLdb
-import datetime
 from credentials import User, Password, Database, DatabaseServer
 
 Zone = "Zone1"
@@ -41,12 +40,9 @@ def read_temp():
         temp_f = temp_c * 9.0 / 5.0 + 32.0
         return temp_f
 
-now = datetime.datetime.now()
-TempDate = now.strftime("%Y-%m-%d")
-TempTime = now.strftime("%H:%M:%S")
 Temp = read_temp()
 try:
-    query = """INSERT INTO tempData (takeDate, takeTime, zone, temperature) VALUES ('%s','%s','%s','%s')""" % (TempDate, TempTime, Zone, Temp)
+    query = """INSERT INTO tempData (zone, temperature) VALUES ('%s','%s')""" % (Zone, Temp)
     curr.execute(query)
     conn.commit()
 except:
