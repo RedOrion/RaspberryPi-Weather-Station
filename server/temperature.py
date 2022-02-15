@@ -43,5 +43,6 @@ try:
     query = """INSERT INTO tempData (zone, temperature) VALUES ('%s','%s')""" % (Location, Temp)
     curr.execute(query)
     conn.commit()
+    conn.close()
 except:
     conn.close()
