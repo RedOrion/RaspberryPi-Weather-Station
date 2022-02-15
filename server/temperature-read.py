@@ -2,10 +2,7 @@ import pymysql
 from credentials import User, Password, Database, DatabaseServer
 
 # To connect MySQL database
-conn = pymysql.connect(host=DatabaseServer,
-        user=User,
-        passwd=Password,
-        db=Database)
+conn = pymysql.connect(host=DatabaseServer, user=User, passwd=Password, db=Database)
     
 cur = conn.cursor()
     
