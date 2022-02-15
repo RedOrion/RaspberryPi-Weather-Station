@@ -4,9 +4,7 @@ import os
 import glob
 import time
 import MySQLdb
-from credentials import User, Password, Database, DatabaseServer
-
-Zone = "Zone1"
+from credentials import User, Password, Database, DatabaseServer, Location
 
 os.system('modprobe w1-gpio')
 os.system('modprobe w1-therm')
@@ -42,7 +40,7 @@ def read_temp():
 
 Temp = read_temp()
 try:
-    query = """INSERT INTO tempData (zone, temperature) VALUES ('%s','%s')""" % (Zone, Temp)
+    query = """INSERT INTO tempData (zone, temperature) VALUES ('%s','%s')""" % (Location, Temp)
     curr.execute(query)
     conn.commit()
 except:
