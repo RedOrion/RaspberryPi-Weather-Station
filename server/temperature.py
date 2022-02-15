@@ -1,9 +1,9 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
 import os
 import glob
 import time
-import MySQLdb
+import pymysql
 from credentials import User, Password, Database, DatabaseServer, Location
 
 os.system('modprobe w1-gpio')
@@ -13,7 +13,7 @@ base_dir = '/sys/bus/w1/devices/'
 device_folder = glob.glob(base_dir + '28*')[0]
 device_file = device_folder + '/w1_slave'
 
-conn = MySQLdb.connect(host= DatabaseServer,
+conn = pymysql.connect(host=DatabaseServer,
         user=User,
         passwd=Password,
         db=Database)
