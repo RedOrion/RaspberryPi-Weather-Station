@@ -5,12 +5,9 @@ import glob
 import time
 import MySQLdb
 import datetime
+from credentials import User, Password, Database, DatabaseServer
 
 Zone = "Zone1"
-User = "sensors"
-Password = "testPassword"
-Database = "sensors"
-DatabaseServer = "localhost"
 
 os.system('modprobe w1-gpio')
 os.system('modprobe w1-therm')

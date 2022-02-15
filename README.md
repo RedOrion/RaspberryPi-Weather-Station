@@ -1,69 +1,24 @@
 # RaspberryPi-Weather-Station
 
 ## Install
-````shell
+```shell
 sudo mkdir /data
 cd /data
 git clone git@github.com:RedOrion/RaspberryPi-Weather-Station.git
-````
+```
 
 ## Initial Setup
 
 Install the mysql server and client and setup the users for mysql
 
-````shell
+```bash
 cd /data/RaspberryPi-Weather-Station/setup/
 ./packages.sh
 ./sql.sh
-````
+```
 
-## Configuring the Server to always run on boot
-
-### Install Required Packages
-````shell
-sudo apt-get install npm
-npm install --global pm2
-````
-
-### Starting PM2 on Boot
-````shell
-pm2 startup
-````
-
-### Starting temperature script with PM2
-````shell
-pm2 start /data/RaspberryPi-Weather-Station/server/temperature.py
-````
-
-### Enable restarting of PM2 after rebooting
-````shell
-pm2 save
-````
-
-### Controlling your temperature.py and other scripts via PM2
-
-#### Restarting temperature script
-````shell
-pm2 restart temperature
-````
-#### Stopping temperature script
-````shell
-pm2 stop temperature
-````
-#### Show the temperature script logs
-````shell
-pm2 logs temperature
-````
-#### Show the temperature script process information
-````shell
-pm2 show temperature
-````
-
-## Configuring automatic updates
-Use cron to pull updates from github and auto restart the scripts via PM2
-
-#### Add to crontab
-You can change the check interval to whatever you want. Currently it is set to run 30 minutes past the hour
-````shell
-30 *  *   *   * /data/RaspberryPi-Weather-Station/server/Update.sh && pm2 restart temperature
-````
+## Temperature cron
+Get temperature at specified intervals
+`0,15,30,45 * * * * /disk1/RaspberryPi-Weather-Station/server/temperature.py`
+Pull updates
+`5 7-20 * * * /data/RaspberryPi-Weather-Station/server/Update.sh`
