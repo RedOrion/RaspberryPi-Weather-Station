@@ -41,15 +41,13 @@ def read_temp():
         temp_f = temp_c * 9.0 / 5.0 + 32.0
         return temp_f
 
-while True:
-    now = datetime.datetime.now()
-    TempDate = now.strftime("%Y-%m-%d")
-    TempTime = now.strftime("%H:%M:%S")
-    Temp = read_temp()
-    time.sleep(1)
-    try:
-        query = """INSERT INTO tempData (takeDate, takeTime, zone, temperature) VALUES ('%s','%s','%s','%s')""" % (TempDate, TempTime, Zone, Temp)
-        curr.execute(query)
-        conn.commit()
-    except:
-        conn.close()
+now = datetime.datetime.now()
+TempDate = now.strftime("%Y-%m-%d")
+TempTime = now.strftime("%H:%M:%S")
+Temp = read_temp()
+try:
+    query = """INSERT INTO tempData (takeDate, takeTime, zone, temperature) VALUES ('%s','%s','%s','%s')""" % (TempDate, TempTime, Zone, Temp)
+    curr.execute(query)
+    conn.commit()
+except:
+    conn.close()
