@@ -9,7 +9,7 @@ conn = pymysql.connect(host=DatabaseServer, user=User, passwd=Password, db=Datab
 cur = conn.cursor()
 
 # Select query
-cur.execute("select * from sensors")
+cur.execute("select * from tempData")
 output = cur.fetchall()
 
 for i in output:
