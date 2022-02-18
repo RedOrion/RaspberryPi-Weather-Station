@@ -7,11 +7,11 @@ from credentials import User, Password, Database, DatabaseServer
 # To connect MySQL database
 conn = pymysql.connect(host=DatabaseServer, user=User, passwd=Password, db=Database)
     
-cur = conn.cursor()
+curr = conn.cursor()
 
 # Select query
-cur.execute("select * from tempData")
-output = cur.fetchall()
+curr.execute("select * from tempData")
+output = curr.fetchall()
 
 for i in output:
     print(i)
