@@ -14,6 +14,9 @@ cd /disk1/RaspberryPi-Weather-Station/setup/
 ./packages.sh
 ./sql.sh
 ```
+## Examples
+sql.sh
+./sql.sh -s mysql.local -h weatherstationpi.local
 
 ## Temperature cron
 Get temperature at specified intervals
