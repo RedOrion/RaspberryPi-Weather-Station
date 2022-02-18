@@ -3,7 +3,7 @@
 import os
 import glob
 import time
-import MySQLdb
+import pymysql
 import datetime
 from credentials import User, Password, Database, DatabaseServer
 
@@ -16,7 +16,7 @@ base_dir = '/sys/bus/w1/devices/'
 device_folder = glob.glob(base_dir + '28*')[0]
 device_file = device_folder + '/w1_slave'
 
-conn = MySQLdb.connect(host=DatabaseServer,
+conn = pymysql.connect(host=DatabaseServer,
         user=User,
         passwd=Password,
         db=Database)
