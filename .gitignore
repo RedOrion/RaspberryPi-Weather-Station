@@ -1,5 +1,6 @@
 # Custom
 server/credentials.py
+*.png
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
