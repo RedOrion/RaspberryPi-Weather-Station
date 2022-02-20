@@ -13,11 +13,26 @@ curr = conn.cursor()
 curr.execute("select * from tempData")
 output = curr.fetchall()
 
+x = []
+y = []
+# print(output)
 for i in output:
-    print(i)
-    
+    x.append(i[1])
+    y.append(i[3])
+    # print(i[0],i[3])
+
+
+  
 # To close the connection
 conn.close()
 
-plt.plot(output[1],output[3])
+plt.plot(x,y,label="Upper Garage Field")
+
+plt.title("Wisconsin Temperatures")
+plt.ylabel('Temperature (F)')
+plt.xlabel('Date')
+plt.grid(True,color='#f1f1f1')
+
+plt.legend()
+
 plt.show()
