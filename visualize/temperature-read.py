@@ -1,6 +1,9 @@
 #!/usr/bin/python3
 
 import pymysql
+
+sys.path.insert(0, '../server/')
+
 from credentials import User, Password, Database, DatabaseServer
 
 # To connect MySQL database
