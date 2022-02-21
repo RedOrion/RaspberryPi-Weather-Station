@@ -40,8 +40,6 @@ def main(argv):
         x.append(i[1])
         y.append(i[3])
         # print(i[0],i[3])
-
-
     
     # To close the connection
     conn.close()
