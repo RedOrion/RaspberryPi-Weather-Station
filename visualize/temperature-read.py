@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
 import pymysql
+import sys
 
 sys.path.insert(0, '../server/')
 
