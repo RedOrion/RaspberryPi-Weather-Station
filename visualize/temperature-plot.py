@@ -1,8 +1,10 @@
 #!/usr/bin/python3
 
+from datetime import date
 import pymysql
 import matplotlib.pyplot as plt
 import sys, getopt
+from collections import defaultdict
 
 sys.path.insert(0, '../server/')
 
@@ -12,8 +14,9 @@ from credentials import User, Password, Database, DatabaseServer
 def main(argv):
     outputFile = ''
     plotTitle = ''
+    zone = False
     try:
-        opts, args = getopt.getopt(argv,"o:ht",["o="])
+        opts, args = getopt.getopt(argv,"o:ht:z:",["o=", "t=", "z="])
     except getopt.GetoptError:
         print("arg failure")
     for opt, arg in opts:
@@ -21,11 +24,16 @@ def main(argv):
             print("temperature-plot.py (for default path)")
             print("-o   output file")
             print("-t   graph title")
+            print("-z   zone")
             sys.exit()
         if opt == '-o':
             outputFile = arg
         if opt == '-t':
             plotTitle = arg
+        if opt == '-z':
+            zone = arg
+
+    print(f"plot title is {plotTitle}")
 
     print(f"outputfile is {outputFile}")
 
@@ -35,21 +43,45 @@ def main(argv):
     curr = conn.cursor()
 
     # Select query
-    curr.execute("select * from tempData")
+    if zone != False:
+        curr.execute(f"select * from tempData where zone = '{zone}' order by temp_id desc limit 5")
+    else:
+        curr.execute("select * from tempData order by temp_id desc limit 5")
     output = curr.fetchall()
 
-    x = []
-    y = []
+    sqlID = []
+    sqlDate = []
+    sqlZoneLoc = []
+    sqlTempF = []
+    sqlDict = defaultdict(dict)
     # print(output)
     for i in output:
-        x.append(i[1])
-        y.append(i[3])
-        # print(i[0],i[3])
-    
+        valueID = i[0]
+        valueDate = i[1]
+        valueZoneLoc = i[2]
+        valueTempF = i[3]
+        
+        sqlID.append(valueID)
+        sqlDate.append(valueDate)
+        sqlZoneLoc.append(valueZoneLoc)
+        sqlTempF.append(valueTempF)
+        # print(valueID, valueDate, valueZoneLoc, valueTempF)
+        sqlDict[valueID]["zone"] = valueZoneLoc
+        sqlDict[valueID]["date"] = valueDate
+        sqlDict[valueID]["tempF"] = valueTempF
+
     # To close the connection
     conn.close()
 
-    plt.plot(x,y,label="Upper Garage Field")
+    # print(sqlDict)
+
+    for id in sqlDict.items():
+        zone = id[1]["zone"]
+        date = id[1]["date"]
+        tempF = id[1]["tempF"]
+        print(id, zone, date, tempF)
+
+    plt.plot(sqlDate,sqlTempF,label=zone)
 
     plt.title(plotTitle)
     plt.ylabel('Temperature (F)')
