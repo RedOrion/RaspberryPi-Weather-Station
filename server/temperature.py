@@ -8,7 +8,7 @@ import sys, getopt
 from credentials import User, Password, Database, DatabaseServer, Location
 
 def main(argv):
-    loop = ''
+    loop = False
     try:
         opts, args = getopt.getopt(argv,"lh")
     except getopt.GetoptError:
@@ -19,7 +19,7 @@ def main(argv):
             print("temperature.py (for default path)")
             sys.exit()
         if opt == '-l':
-            loop = "1"
+            loop = True
 
     os.system('modprobe w1-gpio')
     os.system('modprobe w1-therm')
@@ -53,7 +53,7 @@ def main(argv):
             temp_f = temp_c * 9.0 / 5.0 + 32.0
             return temp_f
 
-    if loop == "0":
+    if loop == False:
         Temp = read_temp()
         try:
             query = """INSERT INTO tempData (zone, temperature) VALUES ('%s','%s')""" % (Location, Temp)

@@ -8,7 +8,7 @@ import time
 import sys, getopt
 
 def main(argv):
-    loop = ''
+    loop = False
     try:
         opts, args = getopt.getopt(argv,"lh")
     except getopt.GetoptError:
@@ -19,7 +19,7 @@ def main(argv):
             print("temperature.py (for default path)")
             sys.exit()
         if opt == '-l':
-            loop = "1"
+            loop = True
 
     os.system('modprobe w1-gpio')
     os.system('modprobe w1-therm')
@@ -45,8 +45,8 @@ def main(argv):
             temp_c = float(temp_string) / 1000.0
             temp_f = temp_c * 9.0 / 5.0 + 32.0
             return temp_c, temp_f
-
-    if loop == "0":
+            
+    if loop == False:
         print(read_temp())
     else:
         while True:
