@@ -73,13 +73,18 @@ def main(argv):
     # To close the connection
     conn.close()
 
-    # print(sqlDict)
+    print(sqlDict)
 
+    uniqueZones = []
     for id in sqlDict.items():
         zone = id[1]["zone"]
         date = id[1]["date"]
         tempF = id[1]["tempF"]
         print(id, zone, date, tempF)
+        if zone not in uniqueZones:
+            uniqueZones.append(zone)
+
+    print(uniqueZones)
 
     plt.plot(sqlDate,sqlTempF,label=zone)
 
