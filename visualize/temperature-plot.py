@@ -11,17 +11,22 @@ from credentials import User, Password, Database, DatabaseServer
 
 def main(argv):
     outputFile = ''
+    plotTitle = ''
     try:
-        opts, args = getopt.getopt(argv,"o:h",["o="])
+        opts, args = getopt.getopt(argv,"o:ht",["o="])
     except getopt.GetoptError:
         print("arg failure")
     for opt, arg in opts:
         if opt == '-h':
-            print("temperature-plot.py -o <outputfile>")
             print("temperature-plot.py (for default path)")
+            print("-o   output file")
+            print("-t   graph title")
             sys.exit()
         if opt == '-o':
             outputFile = arg
+        if opt == '-t':
+            plotTitle = arg
+
     print(f"outputfile is {outputFile}")
 
     # To connect MySQL database
@@ -46,7 +51,7 @@ def main(argv):
 
     plt.plot(x,y,label="Upper Garage Field")
 
-    plt.title("Wisconsin Temperatures")
+    plt.title(plotTitle)
     plt.ylabel('Temperature (F)')
     plt.xlabel('Date')
     plt.grid(True,color='#f1f1f1')
