@@ -18,7 +18,7 @@ def main(argv):
     for opt, arg in opts:
         if opt == '-h':
             print("temperature-plot.py -o <outputfile>")
-            print("temperature.py (for default path)")
+            print("temperature-plot.py (for default path)")
             sys.exit()
         if opt == '-o':
             outputFile = arg
