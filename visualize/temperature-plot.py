@@ -70,23 +70,52 @@ def main(argv):
         sqlDict[valueID]["date"] = valueDate
         sqlDict[valueID]["tempF"] = valueTempF
 
+        from datetime import datetime, timedelta
+        now = datetime.now()
+
     # To close the connection
     conn.close()
 
-    print(sqlDict)
+    # print(sqlDict)
 
     uniqueZones = []
-    for id in sqlDict.items():
-        zone = id[1]["zone"]
-        date = id[1]["date"]
-        tempF = id[1]["tempF"]
-        print(id, zone, date, tempF)
+    allTimeX = []
+    allTimeY = []
+    hour24X = []
+    hour24Y = []
+
+
+    for id, value in sqlDict.items():
+        zone = value["zone"]
+        dateZ = value["date"]
+        tempF = value["tempF"]
+        # print(id, zone, date, tempF)
         if zone not in uniqueZones:
             uniqueZones.append(zone)
+        if now-timedelta(hours=24) <= dateZ <= now:
+            allTimeX.append(dateZ)
+            allTimeY.append(tempF)
 
     print(uniqueZones)
 
-    plt.plot(sqlDate,sqlTempF,label=zone)
+    fig = plt.figure(figsize=(10, 4))
+    plt.subplot(1, 2, 1)
+    plt.plot(allTimeX, allTimeY)
+    plt.subplot(1, 2, 2)
+    plt.plot(hour24X, hour24Y)
+    fig.tight_layout()
+
+    # fig, ((ax1, ax2)) = plt.subplots(1, 2)
+
+    # ax1.plot(sqlDate, sqlTempF)
+    # ax2.plot(sqlDate, sqlTempF, 'tab:orange')
+    # ax1.set_title("All time")
+    # ax2.set_title("24 hours")
+
+    for ax in fig.get_axes():
+        ax.label_outer()
+
+    # plt.plot(sqlDate,sqlTempF,label=zone)
 
     plt.title(plotTitle)
     plt.ylabel('Temperature (F)')
