@@ -128,7 +128,7 @@ def main(argv):
             ax[0].set_title("12 Hours")
             
             ax[1].plot(hours24X, hours24Y, 'b')
-            ax[1].set_title("12 Hours")
+            ax[1].set_title("24 Hours")
         else:
             print("Multiple Zones")
 
