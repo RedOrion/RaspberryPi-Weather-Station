@@ -105,13 +105,6 @@ def main(argv):
     plt.plot(hour24X, hour24Y)
     fig.tight_layout()
 
-    # fig, ((ax1, ax2)) = plt.subplots(1, 2)
-
-    # ax1.plot(sqlDate, sqlTempF)
-    # ax2.plot(sqlDate, sqlTempF, 'tab:orange')
-    # ax1.set_title("All time")
-    # ax2.set_title("24 hours")
-
     for ax in fig.get_axes():
         ax.label_outer()
 
