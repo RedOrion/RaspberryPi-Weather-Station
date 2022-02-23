@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
 from datetime import date
+from itertools import count
 import pymysql
 import matplotlib.pyplot as plt
 import sys, getopt
@@ -33,9 +34,9 @@ def main(argv):
         if opt == '-z':
             zone = arg
 
-    print(f"plot title is {plotTitle}")
+    print(f"plot title: {plotTitle}")
 
-    print(f"outputfile is {outputFile}")
+    print(f"output file: {outputFile}")
 
     # To connect MySQL database
     conn = pymysql.connect(host=DatabaseServer, user=User, passwd=Password, db=Database)
@@ -46,7 +47,7 @@ def main(argv):
     if zone != False:
         curr.execute(f"select * from tempData where zone = '{zone}' order by temp_id desc limit 5")
     else:
-        curr.execute("select * from tempData order by temp_id desc limit 5")
+        curr.execute("select * from tempData")
     output = curr.fetchall()
 
     sqlID = []
@@ -78,13 +79,8 @@ def main(argv):
 
     # print(sqlDict)
 
+    # Get unique zones
     uniqueZones = []
-    allTimeX = []
-    allTimeY = []
-    hour24X = []
-    hour24Y = []
-
-
     for id, value in sqlDict.items():
         zone = value["zone"]
         dateZ = value["date"]
@@ -92,32 +88,65 @@ def main(argv):
         # print(id, zone, date, tempF)
         if zone not in uniqueZones:
             uniqueZones.append(zone)
-        if now-timedelta(hours=24) <= dateZ <= now:
-            allTimeX.append(dateZ)
-            allTimeY.append(tempF)
+    totalUnique = len(uniqueZones)
+    print(f"Total Unique: {totalUnique}")
+    countUnique = 0
 
-    print(uniqueZones)
+    # Plot for each unique zone
+    
+    fig, ax = plt.subplots(totalUnique, 3, figsize = (30,4))
+    print(fig)
+    print(ax)
+    
+    for uZones in uniqueZones:
+        print(uZones)
+        plotX = []
+        plotY = []
+        hours12X = []
+        hours12Y = []
+        hours24X = []
+        hours24Y = []
+        for id, value in sqlDict.items():
+            zone = value["zone"]
+            dateZ = value["date"]
+            tempF = value["tempF"]
+            if zone == uZones:
+                plotX.append(dateZ)
+                plotY.append(tempF)
+                if now-timedelta(hours=24) <= dateZ <= now:
+                    hours24X.append(dateZ)
+                    hours24Y.append(tempF)
+                if now-timedelta(hours=12) <= dateZ <= now:
+                    hours12X.append(dateZ)
+                    hours12Y.append(tempF)
+        if totalUnique == 1:
+            print("Single Zone")
+            ax[2].plot(plotX, plotY, 'r')
+            ax[2].set_title("All Time")
 
-    fig = plt.figure(figsize=(10, 4))
-    plt.subplot(1, 2, 1)
-    plt.plot(allTimeX, allTimeY)
-    plt.subplot(1, 2, 2)
-    plt.plot(hour24X, hour24Y)
-    fig.tight_layout()
+            ax[0].plot(hours12X, hours12Y, 'g')
+            ax[0].set_title("12 Hours")
+            
+            ax[1].plot(hours24X, hours24Y, 'b')
+            ax[1].set_title("12 Hours")
+        else:
+            print("Multiple Zones")
 
-    # plt.plot(sqlDate,sqlTempF,label=zone)
+            ax[countUnique, 2].plot(plotX, plotY, 'r')
+            ax[countUnique, 2].set_title("All Time")
 
-    plt.title(plotTitle)
-    plt.ylabel('Temperature (F)')
-    plt.xlabel('Date')
-    plt.grid(True,color='#f1f1f1')
+            ax[countUnique, 0].plot(hours12X, hours12Y, 'g')
+            ax[countUnique, 0].set_title("12 Hours")
 
-    plt.legend()
+            ax[countUnique, 1].plot(hours24X, hours24Y, 'b')
+            ax[countUnique, 1].set_title("24 Hours")
+
+        countUnique += 1
 
     #plt.show()
     if not outputFile:
         outputFile = "temperature.png"
-    plt.savefig(outputFile)
+    plt.savefig(outputFile, bbox_inches='tight')
 
 if __name__ == "__main__":
    main(sys.argv[1:])
