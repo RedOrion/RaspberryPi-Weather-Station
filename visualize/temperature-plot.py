@@ -105,9 +105,6 @@ def main(argv):
     plt.plot(hour24X, hour24Y)
     fig.tight_layout()
 
-    for ax in fig.get_axes():
-        ax.label_outer()
-
     # plt.plot(sqlDate,sqlTempF,label=zone)
 
     plt.title(plotTitle)
